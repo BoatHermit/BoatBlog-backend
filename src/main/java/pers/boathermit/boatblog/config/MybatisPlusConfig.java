@@ -1,4 +1,4 @@
-package pers.boathermit.boatblog.backend.config;
+package pers.boathermit.boatblog.config;
 
 import com.baomidou.mybatisplus.extension.plugins.MybatisPlusInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.inner.PaginationInnerInterceptor;
@@ -11,7 +11,7 @@ import org.springframework.context.annotation.Configuration;
  * @author yinzihang
  */
 @Configuration
-@MapperScan("pers.boathermit.boatblog.backend.dao")
+@MapperScan("pers.boathermit.boatblog.backend.dao.mapper")
 public class MybatisPlusConfig {
 
     /**

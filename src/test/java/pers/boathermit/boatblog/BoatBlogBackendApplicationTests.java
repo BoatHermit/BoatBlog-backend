@@ -1,4 +1,4 @@
-package pers.boathermit.boatblog.backend;
+package pers.boathermit.boatblog;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
