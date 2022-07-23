@@ -8,10 +8,12 @@ import org.springframework.context.annotation.Configuration;
 
 /**
  * MybatisPlus通用配置
+ *
  * @author yinzihang
+ * @since 0.1
  */
 @Configuration
-@MapperScan("pers.boathermit.boatblog.backend.dao.mapper")
+@MapperScan("pers.boathermit.boatblog.backend.dao")
 public class MybatisPlusConfig {
 
     /**
