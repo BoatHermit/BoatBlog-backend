@@ -15,8 +15,12 @@ import pers.boathermit.boatblog.model.param.PageParam;
 @RequestMapping("/articles")
 public class ArticleController {
 
+    private final ArticleService articleService;
+
     @Autowired
-    private ArticleService articleService;
+    public ArticleController(ArticleService articleService) {
+        this.articleService = articleService;
+    }
 
     /**
      * 首页 文章列表

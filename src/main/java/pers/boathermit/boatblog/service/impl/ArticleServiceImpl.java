@@ -23,11 +23,11 @@ import java.util.List;
 @Service
 public class ArticleServiceImpl implements ArticleService {
 
-    private ArticleMapper articleMapper;
+    private final ArticleMapper articleMapper;
 
     @Autowired
     public ArticleServiceImpl(ArticleMapper articleMapper) {
-
+        this.articleMapper = articleMapper;
     }
 
     @Override
