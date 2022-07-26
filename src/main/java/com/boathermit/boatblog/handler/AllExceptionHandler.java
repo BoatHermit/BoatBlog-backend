@@ -15,13 +15,13 @@ public class AllExceptionHandler {
 
     /**
      * 进行异常处理，处理Exception.class的异常
-     * @param ex 异常
+     * @param e 异常
      * @return 返回失败信息
      */
     @ExceptionHandler(Exception.class)
     @ResponseBody
-    public Result doException(Exception ex){
-        ex.printStackTrace();
+    public Result doException(Exception e){
+        e.printStackTrace();
         return Result.failed(ResultCode.SYSTEM_FAILED);
     }
 }
