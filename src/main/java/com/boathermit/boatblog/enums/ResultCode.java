@@ -18,7 +18,9 @@ public enum ResultCode {
     // 请求失败
     FAILED(201, "操作失败"),
     // token失效
-    TOKEN_FAILED(202, "token失效");
+    TOKEN_FAILED(202, "token失效"),
+    // 系统异常
+    SYSTEM_FAILED(-999,"系统异常");
 
     private final int code;
     private final String msg;
