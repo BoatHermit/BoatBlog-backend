@@ -50,8 +50,17 @@ public class ArticleController {
      *
      * @return 最热文章列表
      */
-    @PostMapping("new")
+    @PostMapping("/new")
     public Result newArticles(){
         return Result.success(articleService.newArticles(Limits.NEW_ARTICLE_LIMIT.getLimit()));
+    }
+
+    /**
+     * 首页 文章归档
+     * @return 归档列表
+     */
+    @PostMapping("/listArchives")
+    public Result listArchives(){
+        return Result.success(articleService.listArchives());
     }
 }

@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.boathermit.boatblog.model.param.PageParam;
 import com.boathermit.boatblog.model.po.Article;
+import com.boathermit.boatblog.model.vo.ArchivesVo;
 import com.boathermit.boatblog.model.vo.ArticleVo;
 import com.boathermit.boatblog.service.TagService;
 import com.boathermit.boatblog.service.UserService;
@@ -66,6 +67,11 @@ public class ArticleServiceImpl implements ArticleService {
     @Override
     public List<ArticleVo> newArticles(int limit) {
         return getArticles(limit, KEYS.CreateDate);
+    }
+
+    @Override
+    public List<ArchivesVo> listArchives() {
+        return articleMapper.listArchives();
     }
 
     private List<ArticleVo> getArticles(int limit, KEYS key) {
