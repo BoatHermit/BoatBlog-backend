@@ -9,4 +9,18 @@
         where id in
         (select tag_id from article_tag where article_id = #{articleId});
     </select>
+
+    <select id="findHotsTagIds" parameterType="int" resultType="java.lang.Long">
+        select tag_id from `article_tag`
+        group by tag_id
+        order by count(*) desc
+        limit #{limit};
+    </select>
+    <select id="findTagsByTagIds" parameterType="list" resultType="com.boathermit.boatblog.model.po.Tag">
+        select id, tag_name as tagName from tag
+        where id in
+        <foreach collection="tagIds" item="tagId" separator="," open="(" close=")">
+            #{tagId}
+        </foreach>
+    </select>
 </mapper>

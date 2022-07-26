@@ -1,6 +1,7 @@
 package com.boathermit.boatblog.service.impl;
 
 import com.boathermit.boatblog.model.vo.TagVo;
+import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -9,6 +10,7 @@ import com.boathermit.boatblog.model.po.Tag;
 import com.boathermit.boatblog.service.TagService;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -29,6 +31,16 @@ public class TagServiceImpl implements TagService {
     public List<TagVo> findTagsByArticleId(Long articleId) {
         List<Tag> tags = tagMapper.findTagsByArticleId(articleId);
         return copyList(tags);
+    }
+
+    @Override
+    public List<TagVo> hot(int limit) {
+        List<Long> hotsTagIds = tagMapper.findHotsTagIds(limit);
+        if (CollectionUtils.isEmpty(hotsTagIds)){
+            return Collections.emptyList();
+        }
+        List<Tag> tagList = tagMapper.findTagsByTagIds(hotsTagIds);
+        return copyList(tagList);
     }
 
     public TagVo copy(Tag tag){
