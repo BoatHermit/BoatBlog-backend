@@ -30,6 +30,16 @@ public class ArticleServiceImpl implements ArticleService {
 
     private final UserService userService;
 
+    /**
+     * 排序属性表
+     */
+    private enum KEYS {
+        // 查看人数
+        ViewCounts,
+        //创建日期
+        CreateDate
+    }
+
     @Autowired
     public ArticleServiceImpl(ArticleMapper articleMapper, TagService tagService, UserService userService) {
         this.articleMapper = articleMapper;
@@ -50,11 +60,25 @@ public class ArticleServiceImpl implements ArticleService {
 
     @Override
     public List<ArticleVo> hot(int limit) {
+        return getArticles(limit, KEYS.ViewCounts);
+    }
+
+    @Override
+    public List<ArticleVo> newArticles(int limit) {
+        return getArticles(limit, KEYS.CreateDate);
+    }
+
+    private List<ArticleVo> getArticles(int limit, KEYS key) {
         LambdaQueryWrapper<Article> queryWrapper = new LambdaQueryWrapper<>();
-        queryWrapper.orderByDesc(Article::getViewCounts);
+        if (key == KEYS.ViewCounts) {
+            queryWrapper.orderByDesc(Article::getViewCounts);
+        } else if (key == KEYS.CreateDate) {
+            queryWrapper.orderByDesc(Article::getCreateDate);
+        }
         queryWrapper.select(Article::getId,Article::getTitle);
-        queryWrapper.last("limit " + limit);
+        queryWrapper.last("limit "+limit);
         List<Article> articles = articleMapper.selectList(queryWrapper);
+
         return copyList(articles,false,false);
     }
 

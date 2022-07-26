@@ -36,12 +36,22 @@ public class ArticleController {
     }
 
     /**
-     * 首页 最热标签列表
+     * 首页 最热文章列表
      *
-     * @return 最热标签列表
+     * @return 最热文章列表
      */
     @PostMapping("/hot")
     public Result listHotArticles() {
-        return Result.success(articleService.hot(Limits.HOT_TAG_LIMIT.getLimit()));
+        return Result.success(articleService.hot(Limits.HOT_ARTICLE_LIMIT.getLimit()));
+    }
+
+    /**
+     * 首页 最新文章
+     *
+     * @return 最热文章列表
+     */
+    @PostMapping("new")
+    public Result newArticles(){
+        return Result.success(articleService.newArticles(Limits.NEW_ARTICLE_LIMIT.getLimit()));
     }
 }

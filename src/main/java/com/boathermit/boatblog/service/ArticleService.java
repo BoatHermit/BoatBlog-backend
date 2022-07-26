@@ -26,4 +26,12 @@ public interface ArticleService {
      * @return 返回热门文章列表
      */
     List<ArticleVo> hot(int limit);
+
+    /**
+     * 返回{@code limit}个最新文章
+     *
+     * @param limit 返回的文章个数
+     * @return 返回最新文章列表
+     */
+    List<ArticleVo> newArticles(int limit);
 }
