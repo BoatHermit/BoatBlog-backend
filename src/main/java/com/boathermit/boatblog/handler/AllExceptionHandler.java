@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
+ * 统一异常处理
  * @author Yin Zihang
  * @since 2022/7/26 19:07
  */
@@ -22,6 +23,6 @@ public class AllExceptionHandler {
     @ResponseBody
     public Result doException(Exception e){
         e.printStackTrace();
-        return Result.failed(ResultCode.SYSTEM_FAILED);
+        return Result.failed(ResultCode.SYSTEM_FAILED, e.getMessage());
     }
 }

@@ -18,4 +18,12 @@ public interface ArticleService {
      * @return 查询结果
      */
     List<ArticleVo> listArticle(PageParam param);
+
+    /**
+     * 返回{@code limit}个热门文章
+     *
+     * @param limit 返回的文章个数
+     * @return 返回热门文章列表
+     */
+    List<ArticleVo> hot(int limit);
 }

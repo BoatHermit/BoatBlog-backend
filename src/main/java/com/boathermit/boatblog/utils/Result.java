@@ -43,4 +43,8 @@ public class Result {
     public static Result failed(ResultCode resultCode) {
         return new Result(resultCode.getCode(), resultCode.getMsg());
     }
+
+    public static Result failed(ResultCode resultCode, Object data) {
+        return new Result(resultCode.getCode(), resultCode.getMsg(), data);
+    }
 }
