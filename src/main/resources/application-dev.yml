@@ -6,6 +6,9 @@ spring:
     username: root
     password: ${spring.datasource.password}
     driver-class-name: com.mysql.cj.jdbc.Driver
+  redis:
+    host: localhost
+    port: 6379
   jackson:
     date-format: yyyy/MM/dd
     time-zone: GMT+8
@@ -16,4 +19,6 @@ mybatis-plus:
   type-aliases-package: com.boathermit.boatblog.model.po
   configuration:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
-
+jwt:
+  secret: 6e12d69c-af21-4cc2-b32d-3fa949b50106
+  expire: 86400000

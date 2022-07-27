@@ -1,5 +1,6 @@
 package com.boathermit.boatblog.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.boathermit.boatblog.dao.UserMapper;
 import com.boathermit.boatblog.model.po.User;
 import com.boathermit.boatblog.service.UserService;
@@ -28,5 +29,15 @@ public class UserServiceImpl implements UserService {
             user.setNickname("查无此人");
         }
         return user;
+    }
+
+    @Override
+    public User findUser(String account, String pwd) {
+        LambdaQueryWrapper<User> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(User::getAccount,account);
+        queryWrapper.eq(User::getPassword,pwd);
+        queryWrapper.select(User::getId,User::getAccount,User::getAvatar,User::getNickname);
+        queryWrapper.last("limit 1");
+        return userMapper.selectOne(queryWrapper);
     }
 }

@@ -1,4 +1,4 @@
-package com.boathermit.boatblog.handler;
+package com.boathermit.boatblog.exception;
 
 import com.boathermit.boatblog.enums.ResultCode;
 import com.boathermit.boatblog.utils.Result;
@@ -12,17 +12,17 @@ import org.springframework.web.bind.annotation.ResponseBody;
  * @since 2022/7/26 19:07
  */
 @ControllerAdvice
-public class AllExceptionHandler {
+public class MyServiceExceptionHandler {
 
     /**
      * 进行异常处理，处理Exception.class的异常
      * @param e 异常
      * @return 返回失败信息
      */
-    @ExceptionHandler(Exception.class)
+    @ExceptionHandler(MyServiceException.class)
     @ResponseBody
-    public Result doException(Exception e){
+    public Result doException(MyServiceException e){
         e.printStackTrace();
-        return Result.failed(ResultCode.SYSTEM_FAILED, e.getMessage());
+        return new Result(e.getCode(), e.getMessage());
     }
 }

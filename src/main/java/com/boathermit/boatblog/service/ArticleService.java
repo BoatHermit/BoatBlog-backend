@@ -3,7 +3,6 @@ package com.boathermit.boatblog.service;
 import com.boathermit.boatblog.model.param.PageParam;
 import com.boathermit.boatblog.model.vo.ArchivesVo;
 import com.boathermit.boatblog.model.vo.ArticleVo;
-import com.boathermit.boatblog.utils.Result;
 
 import java.util.List;
 

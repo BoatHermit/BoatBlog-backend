@@ -1,5 +1,6 @@
 package com.boathermit.boatblog.model.po;
 
+import com.boathermit.boatblog.enums.ROLE;
 import lombok.Data;
 
 /**
@@ -35,4 +36,6 @@ public class User {
     private String salt;
 
     private String status;
+
+    private ROLE role;
 }

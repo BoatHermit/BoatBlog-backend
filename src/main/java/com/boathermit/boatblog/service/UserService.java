@@ -14,4 +14,12 @@ public interface UserService {
      * @return 用户
      */
     User findUserById(Long id);
+
+    /**
+     * 通过account和password查找用户
+     * @param account 账号
+     * @param pwd 密码
+     * @return 对应用户
+     */
+    User findUser(String account, String pwd);
 }
