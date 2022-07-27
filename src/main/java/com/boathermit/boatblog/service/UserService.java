@@ -1,6 +1,7 @@
 package com.boathermit.boatblog.service;
 
 import com.boathermit.boatblog.model.po.User;
+import com.boathermit.boatblog.utils.Result;
 
 /**
  * @author yinzihang
@@ -22,4 +23,11 @@ public interface UserService {
      * @return 对应用户
      */
     User findUser(String account, String pwd);
+
+    /**
+     * 通过token查找用户
+     * @param token token
+     * @return 用户
+     */
+    Result getUserInfoByToken(String token);
 }

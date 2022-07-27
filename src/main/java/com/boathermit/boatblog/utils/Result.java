@@ -37,6 +37,6 @@ public class Result {
     }
 
     public static Result failed() {
-        return new Result(ResultCode.FAILED.getCode(), ResultCode.FAILED.getMsg());
+        return new Result(ResultCode.FAILED);
     }
 }
