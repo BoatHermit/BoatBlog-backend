@@ -10,13 +10,13 @@ import lombok.Getter;
  */
 @Getter
 public class MyServiceException extends RuntimeException {
-    private String code;
+    private int code;
 
     public MyServiceException(String message, Throwable root) {
         super(message, root);
     }
 
-    public MyServiceException(String code, String message) {
+    public MyServiceException(int code, String message) {
         super(message);
         this.code = code;
     }

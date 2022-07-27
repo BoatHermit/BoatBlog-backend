@@ -14,11 +14,11 @@ import com.boathermit.boatblog.enums.ResultCode;
 @AllArgsConstructor
 public class Result {
 
-    private String code;
+    private int code;
     private String msg;
     private Object data;
 
-    public Result(String code, String msg) {
+    public Result(int code, String msg) {
         this.code = code;
         this.msg = msg;
     }
