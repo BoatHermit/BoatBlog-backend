@@ -1,6 +1,7 @@
 package com.boathermit.boatblog.service.impl;
 
 import com.alibaba.fastjson.JSON;
+import com.boathermit.boatblog.enums.ROLE;
 import com.boathermit.boatblog.enums.ResultCode;
 import com.boathermit.boatblog.model.param.LoginParam;
 import com.boathermit.boatblog.model.po.User;
@@ -13,6 +14,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.concurrent.TimeUnit;
 
@@ -56,5 +58,41 @@ public class LoginServiceImpl implements LoginService {
     public Result logout(String token) {
         redisTemplate.delete("TOKEN_"+token);
         return Result.success();
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public Result register(LoginParam loginParam) {
+        String account = loginParam.getAccount();
+        String password = loginParam.getPassword();
+        String nickname = loginParam.getNickname();
+        if (StringUtils.isBlank(account)
+                || StringUtils.isBlank(password)
+                || StringUtils.isBlank(nickname)
+        ){
+            return new Result(ResultCode.PARAMS_ERROR);
+        }
+        User user = this.userService.findUserByAccount(account);
+        if (user != null){
+            return new Result(ResultCode.ACCOUNT_EXIST);
+        }
+        user = new User();
+        user.setNickname(nickname);
+        user.setAccount(account);
+        user.setPassword(DigestUtils.md5Hex(password+SLAT));
+        user.setCreateDate(System.currentTimeMillis());
+        user.setLastLogin(System.currentTimeMillis());
+        user.setAvatar("/static/img/logo.b3a48c0.png");
+        user.setAdmin(1);
+        user.setDeleted(0);
+        user.setSalt("");
+        user.setStatus("");
+        user.setEmail("");
+        user.setRole(ROLE.NORMAL_USER);
+        this.userService.save(user);
+
+        String token = JwtUtil.createJwt(user);
+        redisTemplate.opsForValue().set("TOKEN_"+token, JSON.toJSONString(user),1, TimeUnit.DAYS);
+        return Result.success(token);
     }
 }

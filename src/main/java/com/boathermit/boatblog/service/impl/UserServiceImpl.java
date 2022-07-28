@@ -73,4 +73,17 @@ public class UserServiceImpl implements UserService {
         loginUserVo.setRole(user.getRole());
         return Result.success(loginUserVo);
     }
+
+    @Override
+    public User findUserByAccount(String account) {
+        LambdaQueryWrapper<User> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(User::getAccount, account);
+        queryWrapper.last("limit 1");
+        return userMapper.selectOne(queryWrapper);
+    }
+
+    @Override
+    public void save(User user) {
+        userMapper.insert(user);
+    }
 }

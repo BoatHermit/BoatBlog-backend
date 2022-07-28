@@ -30,4 +30,17 @@ public interface UserService {
      * @return 用户
      */
     Result getUserInfoByToken(String token);
+
+    /**
+     * 根据用户账号返回用户
+     * @param account 账号
+     * @return 用户
+     */
+    User findUserByAccount(String account);
+
+    /**
+     * 向数据库中存储用户
+     * @param user 用户
+     */
+    void save(User user);
 }
