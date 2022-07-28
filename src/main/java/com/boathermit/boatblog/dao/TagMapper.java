@@ -1,7 +1,5 @@
 package com.boathermit.boatblog.dao;
 
-import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.boathermit.boatblog.model.po.Tag;
 import org.springframework.stereotype.Repository;

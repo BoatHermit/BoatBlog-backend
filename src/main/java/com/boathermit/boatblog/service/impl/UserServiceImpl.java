@@ -58,11 +58,11 @@ public class UserServiceImpl implements UserService {
     public Result getUserInfoByToken(String token) {
         Map<String, Claim> map = JwtUtil.parseJwt(token);
         if (map == null){
-            return new Result(ResultCode.NO_LOGIN);
+            return Result.fail(ResultCode.NO_LOGIN);
         }
         String userJson = redisTemplate.opsForValue().get("TOKEN_" + token);
         if (StringUtils.isBlank(userJson)){
-            return new Result(ResultCode.NO_LOGIN);
+            return Result.fail(ResultCode.NO_LOGIN);
         }
         User user = JSON.parseObject(userJson, User.class);
         LoginUserVo loginUserVo = new LoginUserVo();

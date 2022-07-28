@@ -10,5 +10,5 @@ public enum ROLE {
     //博客作者
     WRITER,
     //管理员
-    ADMIN;
+    ADMIN
 }

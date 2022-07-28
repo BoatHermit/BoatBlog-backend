@@ -14,6 +14,7 @@ import com.boathermit.boatblog.enums.ResultCode;
 @AllArgsConstructor
 public class Result {
 
+    private boolean success;
     private int code;
     private String msg;
     private Object data;
@@ -23,20 +24,32 @@ public class Result {
         this.msg = msg;
     }
 
-    public Result(ResultCode resultCode) {
+    public Result(boolean success, ResultCode resultCode) {
+        this.success = success;
         this.code = resultCode.getCode();
         this.msg = resultCode.getMsg();
     }
 
+    public Result(boolean success, ResultCode resultCode, Object data) {
+        this.success = success;
+        this.code = resultCode.getCode();
+        this.msg = resultCode.getMsg();
+        this.data = data;
+    }
+
     public static Result success() {
-        return new Result(ResultCode.SUCCESS);
+        return new Result(true, ResultCode.SUCCESS);
     }
 
     public static Result success(Object data) {
-        return new Result(ResultCode.SUCCESS.getCode(), ResultCode.SUCCESS.getMsg(), data);
+        return new Result(true, ResultCode.SUCCESS, data);
     }
 
-    public static Result failed() {
-        return new Result(ResultCode.FAILED);
+    public static Result fail() {
+        return new Result(false, ResultCode.FAILED);
+    }
+
+    public static Result fail(ResultCode resultCode) {
+        return new Result(false, resultCode);
     }
 }

@@ -13,5 +13,10 @@ import java.util.List;
  */
 @Repository
 public interface ArticleMapper extends BaseMapper<Article> {
+
+    /**
+     * 返回归档列表
+     * @return 归档列表
+     */
     List<ArchivesVo> listArchives();
 }

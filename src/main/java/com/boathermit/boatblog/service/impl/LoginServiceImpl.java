@@ -41,12 +41,12 @@ public class LoginServiceImpl implements LoginService {
         String account = loginParam.getAccount();
         String password = loginParam.getPassword();
         if (StringUtils.isBlank(account) || StringUtils.isBlank(password)){
-            return new Result(ResultCode.PARAMS_ERROR);
+            return Result.fail(ResultCode.PARAMS_ERROR);
         }
         String pwd = DigestUtils.md5Hex(password + SLAT);
         User user = userService.findUser(account,pwd);
         if (user == null){
-            return new Result(ResultCode.ACCOUNT_PWD_NOT_EXIST);
+            return Result.fail(ResultCode.ACCOUNT_PWD_NOT_EXIST);
         }
         //登录成功，使用JWT生成token，返回token和redis中
         String token = JwtUtil.createJwt(user);
@@ -70,11 +70,11 @@ public class LoginServiceImpl implements LoginService {
                 || StringUtils.isBlank(password)
                 || StringUtils.isBlank(nickname)
         ){
-            return new Result(ResultCode.PARAMS_ERROR);
+            return Result.fail(ResultCode.PARAMS_ERROR);
         }
         User user = this.userService.findUserByAccount(account);
         if (user != null){
-            return new Result(ResultCode.ACCOUNT_EXIST);
+            return Result.fail(ResultCode.ACCOUNT_EXIST);
         }
         user = new User();
         user.setNickname(nickname);

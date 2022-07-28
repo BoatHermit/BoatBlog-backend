@@ -1,6 +1,6 @@
-package com.boathermit.boatblog.exception;
+package com.boathermit.boatblog.handler;
 
-import com.boathermit.boatblog.enums.ResultCode;
+import com.boathermit.boatblog.exception.MyServiceException;
 import com.boathermit.boatblog.utils.Result;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
