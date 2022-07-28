@@ -1,7 +1,9 @@
 package com.boathermit.boatblog.config;
 
+import com.boathermit.boatblog.handler.LoginInterceptor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 /**
@@ -21,6 +23,12 @@ public class WebMvcConfig implements WebMvcConfigurer {
     private static final String[] METHODS =
             new String[] { "GET", "POST", "PUT", "DELETE" };
 
+    private final LoginInterceptor loginInterceptor;
+
+    WebMvcConfig(LoginInterceptor loginInterceptor) {
+        this.loginInterceptor = loginInterceptor;
+    }
+
     /**
      * 跨域配置
      */
@@ -31,5 +39,11 @@ public class WebMvcConfig implements WebMvcConfigurer {
                 .allowCredentials(true)
                 .allowedMethods(METHODS)
                 .maxAge(3600);
+    }
+
+    @Override
+    public void addInterceptors(InterceptorRegistry registry) {
+        registry.addInterceptor(loginInterceptor)
+                .addPathPatterns("/test");
     }
 }

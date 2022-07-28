@@ -5,6 +5,7 @@ import com.boathermit.boatblog.enums.ResultCode;
 import com.boathermit.boatblog.model.po.User;
 import com.boathermit.boatblog.service.LoginService;
 import com.boathermit.boatblog.utils.Result;
+import com.boathermit.boatblog.utils.UserThreadLocal;
 import lombok.extern.slf4j.Slf4j;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,12 +40,12 @@ public class LoginInterceptor implements HandlerInterceptor {
             return true;
         }
         String token = request.getHeader("Authorization");
-        log.info("=================request start===========================");
+        log.info("====================request start====================");
         String requestUri = request.getRequestURI();
         log.info("request uri:{}",requestUri);
         log.info("request method:{}",request.getMethod());
         log.info("token:{}", token);
-        log.info("=================request end===========================");
+        log.info("=====================request end=====================");
 
         if (token == null){
             Result result = Result.fail(ResultCode.NO_LOGIN);
@@ -61,6 +62,15 @@ public class LoginInterceptor implements HandlerInterceptor {
         }
 
         //是登录状态，放行
+        UserThreadLocal.put(user);
         return true;
+    }
+
+    @Override
+    public void afterCompletion(@NotNull HttpServletRequest request,
+                                @NotNull HttpServletResponse response,
+                                @NotNull Object handler,
+                                Exception ex) throws Exception {
+        UserThreadLocal.remove();
     }
 }
