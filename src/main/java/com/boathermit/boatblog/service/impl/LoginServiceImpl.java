@@ -1,6 +1,7 @@
 package com.boathermit.boatblog.service.impl;
 
 import com.alibaba.fastjson.JSON;
+import com.auth0.jwt.interfaces.Claim;
 import com.boathermit.boatblog.enums.ROLE;
 import com.boathermit.boatblog.enums.ResultCode;
 import com.boathermit.boatblog.model.param.LoginParam;
@@ -16,6 +17,8 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.IdentityHashMap;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -94,5 +97,22 @@ public class LoginServiceImpl implements LoginService {
         String token = JwtUtil.createJwt(user);
         redisTemplate.opsForValue().set("TOKEN_"+token, JSON.toJSONString(user),1, TimeUnit.DAYS);
         return Result.success(token);
+    }
+
+    @Override
+    public User checkToken(String token) {
+        if (StringUtils.isBlank(token)) {
+            return null;
+        }
+        Map<String, Claim> record = JwtUtil.parseJwt(token);
+        if (record == null) {
+            return null;
+        }
+        String userJson = redisTemplate.opsForValue().get("TOKEN_" + token);
+        if (StringUtils.isBlank(userJson)) {
+            return null;
+        }
+
+        return JSON.parseObject(userJson, User.class);
     }
 }

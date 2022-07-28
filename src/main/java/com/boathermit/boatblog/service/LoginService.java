@@ -1,6 +1,7 @@
 package com.boathermit.boatblog.service;
 
 import com.boathermit.boatblog.model.param.LoginParam;
+import com.boathermit.boatblog.model.po.User;
 import com.boathermit.boatblog.utils.Result;
 
 /**
@@ -29,4 +30,11 @@ public interface LoginService {
      * @return token
      */
     Result register(LoginParam loginParam);
+
+    /**
+     * 使用token查找用户
+     * @param token token
+     * @return 用户
+     */
+    User checkToken(String token);
 }

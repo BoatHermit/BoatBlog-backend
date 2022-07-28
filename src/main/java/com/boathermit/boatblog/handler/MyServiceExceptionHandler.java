@@ -23,6 +23,6 @@ public class MyServiceExceptionHandler {
     @ResponseBody
     public Result doException(MyServiceException e){
         e.printStackTrace();
-        return new Result(e.getCode(), e.getMessage());
+        return Result.fail(e.getCode(), e.getMessage());
     }
 }
