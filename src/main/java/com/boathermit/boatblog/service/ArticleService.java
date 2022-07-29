@@ -42,4 +42,12 @@ public interface ArticleService {
      * @return 返回最新文章列表
      */
     List<ArchivesVo> listArchives();
+
+    /**
+     * 根据文章id返回文章详情
+     *
+     * @param id 文章id
+     * @return 文章详情
+     */
+    ArticleVo findArticleById(Long id);
 }

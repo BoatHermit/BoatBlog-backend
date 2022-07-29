@@ -5,11 +5,11 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.boathermit.boatblog.model.param.PageParam;
 import com.boathermit.boatblog.model.po.Article;
 import com.boathermit.boatblog.model.vo.ArchivesVo;
+import com.boathermit.boatblog.model.vo.ArticleBodyVo;
 import com.boathermit.boatblog.model.vo.ArticleVo;
-import com.boathermit.boatblog.service.TagService;
-import com.boathermit.boatblog.service.UserService;
+import com.boathermit.boatblog.model.vo.CategoryVo;
+import com.boathermit.boatblog.service.*;
 import com.boathermit.boatblog.dao.ArticleMapper;
-import com.boathermit.boatblog.service.ArticleService;
 
 import org.joda.time.DateTime;
 import org.springframework.beans.BeanUtils;
@@ -27,9 +27,11 @@ import java.util.List;
 public class ArticleServiceImpl implements ArticleService {
 
     private final ArticleMapper articleMapper;
-    private final TagService tagService;
 
+    private final TagService tagService;
     private final UserService userService;
+    private final ArticleBodyService articleBodyService;
+    private final CategoryService categoryService;
 
     /**
      * 排序属性表
@@ -42,10 +44,13 @@ public class ArticleServiceImpl implements ArticleService {
     }
 
     @Autowired
-    public ArticleServiceImpl(ArticleMapper articleMapper, TagService tagService, UserService userService) {
+    public ArticleServiceImpl(ArticleMapper articleMapper, TagService tagService, UserService userService,
+                              ArticleBodyService articleBodyService, CategoryService categoryService) {
         this.articleMapper = articleMapper;
         this.tagService = tagService;
         this.userService = userService;
+        this.articleBodyService = articleBodyService;
+        this.categoryService = categoryService;
     }
 
     @Override
@@ -74,6 +79,11 @@ public class ArticleServiceImpl implements ArticleService {
         return articleMapper.listArchives();
     }
 
+    @Override
+    public ArticleVo findArticleById(Long id) {
+        return copy(articleMapper.selectById(id), true, true, true, true);
+    }
+
     private List<ArticleVo> getArticles(int limit, KEYS key) {
         LambdaQueryWrapper<Article> queryWrapper = new LambdaQueryWrapper<>();
         if (key == KEYS.ViewCounts) {
@@ -91,13 +101,14 @@ public class ArticleServiceImpl implements ArticleService {
     private List<ArticleVo> copyList(List<Article> records, boolean isTag, boolean isAuthor) {
         List<ArticleVo> articleVoList = new ArrayList<>();
         for (Article record: records) {
-             articleVoList.add(copy(record, isTag, isAuthor));
+             articleVoList.add(copy(record, isTag, isAuthor, false, false));
         }
 
         return articleVoList;
     }
 
-    private ArticleVo copy(Article article, boolean isTag, boolean isAuthor) {
+    private ArticleVo copy(Article article, boolean isTag, boolean isAuthor,
+                           boolean isBody, boolean isCategory) {
         ArticleVo articleVo = new ArticleVo();
         BeanUtils.copyProperties(article, articleVo);
         articleVo.setCreateDate(new DateTime(article.getCreateDate()).toString("yyyy-MM-dd HH:mm"));
@@ -109,6 +120,15 @@ public class ArticleServiceImpl implements ArticleService {
         if (isAuthor) {
             Long authorId = article.getAuthorId();
             articleVo.setAuthor(userService.findUserById(authorId).getNickname());
+        }
+        if (isBody) {
+            ArticleBodyVo articleBodyVo = articleBodyService.findArticleBodyById(article.getBodyId());
+            articleVo.setBody(articleBodyVo);
+        }
+
+        if (isCategory) {
+            CategoryVo categoryVo = categoryService.findCategoryById(article.getCategoryId());
+            articleVo.setCategory(categoryVo);
         }
 
         return articleVo;
