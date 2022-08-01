@@ -32,6 +32,7 @@ public class ArticleServiceImpl implements ArticleService {
     private final UserService userService;
     private final ArticleBodyService articleBodyService;
     private final CategoryService categoryService;
+    private final ThreadService threadService;
 
     /**
      * 排序属性表
@@ -45,12 +46,13 @@ public class ArticleServiceImpl implements ArticleService {
 
     @Autowired
     public ArticleServiceImpl(ArticleMapper articleMapper, TagService tagService, UserService userService,
-                              ArticleBodyService articleBodyService, CategoryService categoryService) {
+                              ArticleBodyService articleBodyService, CategoryService categoryService, ThreadService threadService) {
         this.articleMapper = articleMapper;
         this.tagService = tagService;
         this.userService = userService;
         this.articleBodyService = articleBodyService;
         this.categoryService = categoryService;
+        this.threadService = threadService;
     }
 
     @Override
@@ -81,6 +83,8 @@ public class ArticleServiceImpl implements ArticleService {
 
     @Override
     public ArticleVo findArticleById(Long id) {
+        Article article = articleMapper.selectById(id);
+        threadService.updateViewCount(articleMapper, article);
         return copy(articleMapper.selectById(id), true, true, true, true);
     }
 
