@@ -7,6 +7,7 @@ import com.boathermit.boatblog.dao.UserMapper;
 import com.boathermit.boatblog.enums.ResultCode;
 import com.boathermit.boatblog.model.po.User;
 import com.boathermit.boatblog.model.vo.LoginUserVo;
+import com.boathermit.boatblog.model.vo.UserVo;
 import com.boathermit.boatblog.service.UserService;
 import com.boathermit.boatblog.utils.JwtUtil;
 import com.boathermit.boatblog.utils.Result;
@@ -42,6 +43,21 @@ public class UserServiceImpl implements UserService {
             user.setNickname("查无此人");
         }
         return user;
+    }
+
+    @Override
+    public UserVo findUserVoById(Long id) {
+        User user = userMapper.selectById(id);
+        if (user == null){
+            user = new User();
+            user.setAvatar("/static/img/logo.b3a48c0.png");
+            user.setNickname("用户不存在");
+        }
+        UserVo userVo = new UserVo();
+        userVo.setAvatar(user.getAvatar());
+        userVo.setNickname(user.getNickname());
+        userVo.setId(user.getId());
+        return userVo;
     }
 
     @Override

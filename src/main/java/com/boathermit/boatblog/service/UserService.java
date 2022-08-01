@@ -1,6 +1,7 @@
 package com.boathermit.boatblog.service;
 
 import com.boathermit.boatblog.model.po.User;
+import com.boathermit.boatblog.model.vo.UserVo;
 import com.boathermit.boatblog.utils.Result;
 
 /**
@@ -15,6 +16,13 @@ public interface UserService {
      * @return 用户
      */
     User findUserById(Long id);
+
+    /**
+     * 根据用户id返回对应用户Vo
+     * @param id 用户id
+     * @return 用户Vo
+     */
+    UserVo findUserVoById(Long id);
 
     /**
      * 通过account和password查找用户
