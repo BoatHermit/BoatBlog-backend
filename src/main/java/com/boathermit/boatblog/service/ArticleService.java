@@ -1,8 +1,10 @@
 package com.boathermit.boatblog.service;
 
+import com.boathermit.boatblog.model.param.ArticleParam;
 import com.boathermit.boatblog.model.param.PageParam;
 import com.boathermit.boatblog.model.vo.ArchivesVo;
 import com.boathermit.boatblog.model.vo.ArticleVo;
+import com.boathermit.boatblog.utils.Result;
 
 import java.util.List;
 
@@ -50,4 +52,11 @@ public interface ArticleService {
      * @return 文章详情
      */
     ArticleVo findArticleById(Long id);
+
+    /**
+     * 创建文章
+     * @param articleParam 文章信息
+     * @return 成功信息，含文章id
+     */
+    Result publish(ArticleParam articleParam);
 }

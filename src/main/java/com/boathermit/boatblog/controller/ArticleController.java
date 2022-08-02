@@ -1,6 +1,7 @@
 package com.boathermit.boatblog.controller;
 
 import com.boathermit.boatblog.enums.Limits;
+import com.boathermit.boatblog.model.param.ArticleParam;
 import com.boathermit.boatblog.model.param.PageParam;
 import com.boathermit.boatblog.utils.Result;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -72,5 +73,10 @@ public class ArticleController {
     @PostMapping("view/{id}")
     public Result findArticleById(@PathVariable("id") Long id) {
         return Result.success(articleService.findArticleById(id));
+    }
+
+    @PostMapping("publish")
+    public Result publish(@RequestBody ArticleParam articleParam){
+        return articleService.publish(articleParam);
     }
 }

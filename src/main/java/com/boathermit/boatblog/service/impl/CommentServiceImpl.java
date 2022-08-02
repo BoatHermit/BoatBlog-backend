@@ -14,6 +14,7 @@ import com.boathermit.boatblog.utils.UserThreadLocal;
 import org.joda.time.DateTime;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,6 +46,7 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public Result addComment(CommentParam commentParam) {
         User user = UserThreadLocal.get();
         Comment comment = new Comment();
