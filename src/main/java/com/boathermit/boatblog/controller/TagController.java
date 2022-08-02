@@ -33,4 +33,9 @@ public class TagController {
     public Result listHotTags() {
         return Result.success(tagService.hot(Limits.HOT_TAG_LIMIT.getLimit()));
     }
+
+    @GetMapping
+    public Result listCategories() {
+        return tagService.findAll();
+    }
 }

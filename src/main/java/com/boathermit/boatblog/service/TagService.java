@@ -1,6 +1,7 @@
 package com.boathermit.boatblog.service;
 
 import com.boathermit.boatblog.model.vo.TagVo;
+import com.boathermit.boatblog.utils.Result;
 
 import java.util.List;
 
@@ -24,4 +25,10 @@ public interface TagService {
      * @return 返回热门标签列表
      */
     List<TagVo> hot(int limit);
+
+    /**
+     * 查看所有文章标签
+     * @return 类别
+     */
+    Result findAll();
 }

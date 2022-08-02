@@ -1,6 +1,8 @@
 package com.boathermit.boatblog.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.boathermit.boatblog.model.vo.TagVo;
+import com.boathermit.boatblog.utils.Result;
 import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,6 +43,12 @@ public class TagServiceImpl implements TagService {
         }
         List<Tag> tagList = tagMapper.findTagsByTagIds(hotsTagIds);
         return copyList(tagList);
+    }
+
+    @Override
+    public Result findAll() {
+        List<Tag> tags = tagMapper.selectList(new LambdaQueryWrapper<>());
+        return Result.success(copyList(tags));
     }
 
     public TagVo copy(Tag tag){
