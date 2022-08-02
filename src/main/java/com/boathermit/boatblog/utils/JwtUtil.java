@@ -55,8 +55,6 @@ public class JwtUtil {
         return JWT.create()
                 //可以将基本信息放到claims中
                 .withClaim("account", user.getAccount())
-                //name
-                .withClaim("role", user.getRole().name())
                 //超时设置,设置过期的日期
                 .withExpiresAt(expireDate)
                 //签发时间

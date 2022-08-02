@@ -2,7 +2,6 @@ package com.boathermit.boatblog.service.impl;
 
 import com.alibaba.fastjson.JSON;
 import com.auth0.jwt.interfaces.Claim;
-import com.boathermit.boatblog.enums.ROLE;
 import com.boathermit.boatblog.enums.ResultCode;
 import com.boathermit.boatblog.model.param.LoginParam;
 import com.boathermit.boatblog.model.po.User;
@@ -17,7 +16,6 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.IdentityHashMap;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
@@ -91,7 +89,6 @@ public class LoginServiceImpl implements LoginService {
         user.setSalt("");
         user.setStatus("");
         user.setEmail("");
-        user.setRole(ROLE.NORMAL_USER);
         this.userService.save(user);
 
         String token = JwtUtil.createJwt(user);
