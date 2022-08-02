@@ -1,12 +1,10 @@
 package com.boathermit.boatblog.controller;
 
+import com.boathermit.boatblog.model.param.CommentParam;
 import com.boathermit.boatblog.service.CommentService;
 import com.boathermit.boatblog.utils.Result;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * @author Yin Zihang
@@ -28,5 +26,8 @@ public class CommentController {
         return commentService.getCommentsByArticleId(articleId);
     }
 
-
+    @PostMapping("/create/change")
+    public Result addComment(@RequestBody CommentParam commentParam) {
+        return commentService.addComment(commentParam);
+    }
 }

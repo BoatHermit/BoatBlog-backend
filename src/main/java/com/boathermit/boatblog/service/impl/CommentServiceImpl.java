@@ -2,12 +2,15 @@ package com.boathermit.boatblog.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.boathermit.boatblog.dao.CommentMapper;
+import com.boathermit.boatblog.model.param.CommentParam;
 import com.boathermit.boatblog.model.po.Comment;
+import com.boathermit.boatblog.model.po.User;
 import com.boathermit.boatblog.model.vo.CommentVo;
 import com.boathermit.boatblog.model.vo.UserVo;
 import com.boathermit.boatblog.service.CommentService;
 import com.boathermit.boatblog.service.UserService;
 import com.boathermit.boatblog.utils.Result;
+import com.boathermit.boatblog.utils.UserThreadLocal;
 import org.joda.time.DateTime;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
@@ -39,6 +42,22 @@ public class CommentServiceImpl implements CommentService {
         List<Comment> comments = commentMapper.selectList(queryWrapper);
         List<CommentVo> commentVos = copyList(comments);
         return Result.success(commentVos);
+    }
+
+    @Override
+    public Result addComment(CommentParam commentParam) {
+        User user = UserThreadLocal.get();
+        Comment comment = new Comment();
+        comment.setContent(commentParam.getContent());
+        comment.setCreateDate(System.currentTimeMillis());
+        comment.setArticleId(commentParam.getArticleId());
+        comment.setAuthorId(user.getId());
+        comment.setParentId(commentParam.getParentId() == null ? 0 : commentParam.getParentId());
+        comment.setToUid(commentParam.getToUserId() == null ? 0 : commentParam.getToUserId());
+        comment.setLevel(commentParam.getParentId() == null ? 1 : 2);
+
+        commentMapper.insert(comment);
+        return Result.success();
     }
 
     private List<CommentVo> copyList(List<Comment> comments) {
